@@ -22,6 +22,14 @@
 		<mkdir dir="${build}/main" />
 		<mkdir dir="${build}/test" />
 	</target>
+	<!-- Ejecutar checkstyle, salida por consola -->
+	<target name="checkstyle">
+		<taskdef resource="checkstyletask.properties" classpath="${checkstyle.lib}" />
+		<checkstyle config="${checkstyle.checks}" failureProperty="checkstyle.failure" failOnViolation="false">
+			<formatter type="xml" usefile="false" />
+			<fileset dir="${src}" includes="**/*.java" />
+		</checkstyle>
+	</target>
 	<!-- compilar... -->
 	<target name="compila" description="Compila">
 		<javac includeantruntime="false" srcdir="${src}" destdir="${build}/main" classpathref="classpath.test" />
@@ -40,13 +48,5 @@
 				</fileset>
 			</batchtest>
 		</junit>
-	</target>
-	<!-- Ejecutar checkstyle, salida por consola -->
-	<target name="checkstyle">
-		<taskdef resource="checkstyletask.properties" classpath="${checkstyle.lib}" />
-		<checkstyle config="${checkstyle.checks}" failureProperty="checkstyle.failure" failOnViolation="false">
-			<formatter type="xml" usefile="false" />
-			<fileset dir="${src}" includes="**/*.java" />
-		</checkstyle>
 	</target>
 </project>
